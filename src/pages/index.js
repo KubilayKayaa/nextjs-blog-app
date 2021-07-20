@@ -79,8 +79,8 @@ function Home({ posts }) {
   );
 }
 
-export async function getServerSideProps() {
-  const res = await fetch("https://nextjs-post-app.vercel.app/api/posts");
+export async function getServerSideProps(context) {
+  const res = await fetch(`https://nextjs-post-app.vercel.app/api/posts`);
   const posts = await res.json();
 
   return {

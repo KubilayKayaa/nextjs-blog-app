@@ -5,10 +5,9 @@ import validate from "../../components/CreatePost/validate";
 import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 
-function edit({ post }) {
+function edit({ post, url }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
-
   const updatePost = async (values) => {
     await fetch(
       `https://nextjs-post-app.vercel.app/api/posts/${post.data._id}`,
@@ -64,7 +63,7 @@ export async function getServerSideProps(context) {
   const post = await res.json();
 
   return {
-    props: { post },
+    props: { post, url: context.req.headers.host },
   };
 }
 

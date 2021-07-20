@@ -5,6 +5,7 @@ const Layout = ({ children }) => (
   <>
     <Head>
       <title>Post App</title>
+      <link rel="shortcut icon" href="../public/favicon.ico" />
     </Head>
     <Navbar />
     {children}
