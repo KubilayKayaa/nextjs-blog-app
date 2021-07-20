@@ -10,9 +10,7 @@ function index({ post }) {
 }
 
 export async function getServerSideProps(context) {
-  const res = await fetch(
-    `http://localhost:3000/api/posts/${context.query.id}`
-  );
+  const res = await fetch(`/api/posts/${context.query.id}`);
   const post = await res.json();
 
   return {

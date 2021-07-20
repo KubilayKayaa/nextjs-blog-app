@@ -9,7 +9,7 @@ function edit({ post }) {
   const router = useRouter();
 
   const updatePost = async (values) => {
-    await fetch(`http://localhost:3000/api/posts/${post.data._id}`, {
+    await fetch(`/api/posts/${post.data._id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -51,9 +51,7 @@ function edit({ post }) {
 }
 
 export async function getServerSideProps(context) {
-  const res = await fetch(
-    `http://localhost:3000/api/posts/${context.query.id}`
-  );
+  const res = await fetch(`/api/posts/${context.query.id}`);
   const post = await res.json();
 
   return {

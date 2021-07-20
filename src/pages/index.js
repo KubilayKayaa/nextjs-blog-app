@@ -11,7 +11,7 @@ function Home({ posts }) {
   const router = useRouter();
   const deletePost = async (id) => {
     try {
-      const deleted = await fetch(`http://localhost:3000/api/posts/${id}`, {
+      const deleted = await fetch(`/api/posts/${id}`, {
         method: "Delete",
       });
       router.push("/");
@@ -77,7 +77,7 @@ function Home({ posts }) {
 }
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/posts");
+  const res = await fetch("/api/posts");
   const posts = await res.json();
 
   return {
