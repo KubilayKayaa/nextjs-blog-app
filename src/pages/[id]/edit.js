@@ -3,6 +3,7 @@ import TextField from "../../components/CreatePost/TextField";
 import styles from "../../components/CreatePost/createpost.module.css";
 import validate from "../../components/CreatePost/validate";
 import { useRouter } from "next/dist/client/router";
+import Head from "next/head";
 
 function edit({ post }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -36,6 +37,9 @@ function edit({ post }) {
     >
       {(formik) => (
         <div className={styles.createPostContainer}>
+          <Head>
+            <title>{post.data.title}</title>
+          </Head>
           <h1 className="my-4 font-weight-bold-display-4 titleText">
             Update Post
           </h1>
