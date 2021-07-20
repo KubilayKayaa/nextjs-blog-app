@@ -9,14 +9,17 @@ function edit({ post }) {
   const router = useRouter();
 
   const updatePost = async (values) => {
-    await fetch(`/api/posts/${post.data._id}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+    await fetch(
+      `https://nextjs-post-app.vercel.app/api/posts/${post.data._id}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
+    );
     router.push("/");
   };
 
@@ -51,7 +54,9 @@ function edit({ post }) {
 }
 
 export async function getServerSideProps(context) {
-  const res = await fetch(`/api/posts/${context.query.id}`);
+  const res = await fetch(
+    `https://nextjs-post-app.vercel.app/api/posts/${context.query.id}`
+  );
   const post = await res.json();
 
   return {
