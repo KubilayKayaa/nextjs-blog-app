@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./navbar.module.css";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 
 export default function Navbar() {
   const [user, setUser] = useState({});

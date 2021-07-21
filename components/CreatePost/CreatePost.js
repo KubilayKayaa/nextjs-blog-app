@@ -2,7 +2,7 @@ import { Formik, Form } from "formik";
 import TextField from "./TextField";
 import styles from "./createpost.module.css";
 import validate from "./validate";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 function CreatePost({ url }) {

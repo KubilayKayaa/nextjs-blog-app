@@ -1,10 +1,10 @@
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import { Formik, Form } from "formik";
 import TextField from "../components/CreatePost/TextField";
-import AuthValidate from "./validates/AuthValidate";
-import AuthValidate2 from "./validates/AuthValidate2";
+import AuthValidate from "../validates/AuthValidate";
+import AuthValidate2 from "../validates/AuthValidate2";
 
 export default function Auth() {
   const [authRate, setAuthRate] = useState(1);

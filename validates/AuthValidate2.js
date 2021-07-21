@@ -1,9 +1,6 @@
 import * as Yup from "yup";
 
-const validate = Yup.object({
-  name: Yup.string()
-    .max(40, "Must be 40 characters or less.")
-    .required("Required."),
+const AuthValidate2 = Yup.object({
   email: Yup.string()
     .email("Email is invalid.")
     .max(80, "Must be 80 characters or less")
@@ -13,4 +10,4 @@ const validate = Yup.object({
     .required("Required"),
 });
 
-export default validate;
+export default AuthValidate2;

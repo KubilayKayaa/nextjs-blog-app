@@ -3,7 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 function Home({ posts }) {
