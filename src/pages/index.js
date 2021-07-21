@@ -4,24 +4,26 @@ import styles from "../styles/Home.module.css";
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Home({ posts }) {
   const [search, setSearch] = useState("");
+  const [isAuth, setIsAuth] = useState();
   const router = useRouter();
   const deletePost = async (id) => {
     try {
-      const deleted = await fetch(
-        `https://nextjs-post-app.vercel.app/api/posts/${id}`,
-        {
-          method: "Delete",
-        }
-      );
+      const deleted = await fetch(`http://localhost:3000/api/posts/${id}`, {
+        method: "Delete",
+      });
       router.push("/");
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    setIsAuth(JSON.parse(sessionStorage.getItem("user")));
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -59,17 +61,25 @@ function Home({ posts }) {
                     <a className={styles.postTitle}>{post.title}</a>
                   </Link>
                   <p>{post.description}</p>
-                  <div className={styles.icons}>
-                    <AiFillDelete
-                      size="18"
-                      className={styles.icon}
-                      onClick={() => deletePost(post._id)}
-                    />
-                    <FiEdit2
-                      size="18"
-                      className={styles.icon}
-                      onClick={() => router.push(`/${post._id}/edit`)}
-                    />
+                  {isAuth && isAuth.user.email == post.userName ? (
+                    <div className={styles.icons}>
+                      <AiFillDelete
+                        size="18"
+                        className={styles.icon}
+                        onClick={() => deletePost(post._id)}
+                      />
+                      <FiEdit2
+                        size="18"
+                        className={styles.icon}
+                        onClick={() => router.push(`/${post._id}/edit`)}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <div className={styles.profile}>
+                    <div></div>
+                    <p className={styles.profileUser}>{post.userName}</p>
                   </div>
                 </div>
               ))}
@@ -80,7 +90,7 @@ function Home({ posts }) {
 }
 
 export async function getServerSideProps(context) {
-  const res = await fetch(`https://nextjs-post-app.vercel.app/api/posts`);
+  const res = await fetch(`http://localhost:3000/api/posts`);
   const posts = await res.json();
 
   return {

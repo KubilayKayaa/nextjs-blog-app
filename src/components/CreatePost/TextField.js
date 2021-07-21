@@ -1,6 +1,6 @@
 import React from "react";
 import { ErrorMessage, useField } from "formik";
-import styles from "./createpost.module.css";
+import styles from "../../styles/Home.module.css";
 
 const TextField = ({ label, ...props }) => {
   const [field, meta] = useField(props);

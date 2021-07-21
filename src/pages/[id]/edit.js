@@ -2,63 +2,85 @@ import { Formik, Form } from "formik";
 import TextField from "../../components/CreatePost/TextField";
 import styles from "../../components/CreatePost/createpost.module.css";
 import validate from "../../components/CreatePost/validate";
-import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
-function edit({ post, url }) {
+function Edit({ post, url }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
+  const [isAuth, setIsAuth] = useState(false);
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    isAuthFnc();
+  }, []);
+
   const updatePost = async (values) => {
-    await fetch(
-      `https://nextjs-post-app.vercel.app/api/posts/${post.data._id}`,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }
-    );
+    await fetch(`http://localhost:3000/api/posts/${post.data._id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
     router.push("/");
   };
 
+  const isAuthFnc = async () => {
+    const res = await fetch(`http://localhost:3000/api/posts/${post.data._id}`);
+    const data = await res.json();
+    let item = JSON.parse(sessionStorage.getItem("user"));
+    if (data.data.userName == item.user.email) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  };
+
   return (
-    <Formik
-      initialValues={{
-        title: post.data.title,
-        description: post.data.description,
-      }}
-      validationSchema={validate}
-      onSubmit={(values) => {
-        updatePost(values);
-      }}
-    >
-      {(formik) => (
-        <div className={styles.createPostContainer}>
-          <Head>
-            <title>{post.data.title}</title>
-          </Head>
-          <h1 className="my-4 font-weight-bold-display-4 titleText">
-            Update Post
-          </h1>
-          <div className={styles.underline}></div>
-          <Form>
-            <TextField label="Title" name="title" type="text" />
-            <TextField label="Description" name="description" type="text" />
-            <button className="btn btn-dark mt-3 shadow-none" type="submit">
-              Update
-            </button>
-          </Form>
-        </div>
+    <>
+      {isAuth ? (
+        <Formik
+          initialValues={{
+            title: post.data.title,
+            description: post.data.description,
+          }}
+          validationSchema={validate}
+          onSubmit={(values) => {
+            updatePost(values);
+          }}
+        >
+          {(formik) => (
+            <div className={styles.createPostContainer}>
+              <Head>
+                <title>{post.data.title}</title>
+              </Head>
+              <h1 className="my-4 font-weight-bold-display-4 titleText">
+                Update Post
+              </h1>
+              <div className={styles.underline}></div>
+              <Form>
+                <TextField label="Title" name="title" type="text" />
+                <TextField label="Description" name="description" type="text" />
+                <button className="btn btn-dark mt-3 shadow-none" type="submit">
+                  Update
+                </button>
+              </Form>
+            </div>
+          )}
+        </Formik>
+      ) : (
+        <p>You can not update this post.</p>
       )}
-    </Formik>
+    </>
   );
 }
 
 export async function getServerSideProps(context) {
   const res = await fetch(
-    `https://nextjs-post-app.vercel.app/api/posts/${context.query.id}`
+    `http://localhost:3000/api/posts/${context.query.id}`
   );
   const post = await res.json();
 
@@ -67,4 +89,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default edit;
+export default Edit;

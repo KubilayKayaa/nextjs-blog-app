@@ -21,3 +21,10 @@
     color:#fff !important;
     text-decoration: none;
 }
+
+.navbar button{
+    background-color: transparent;
+    border:none;
+    color:#fff;
+    margin-left: 12px;
+}

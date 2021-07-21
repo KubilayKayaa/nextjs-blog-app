@@ -12,6 +12,7 @@ const PostSchema = new mongoose.Schema({
     required: [true, "Please add a description."],
     maxlength: [200, "Description cannot be more than 200 characters."],
   },
+  userName: {},
 });
 
 module.exports = mongoose.models.Post || mongoose.model("Post", PostSchema);

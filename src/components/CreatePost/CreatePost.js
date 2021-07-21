@@ -3,12 +3,20 @@ import TextField from "./TextField";
 import styles from "./createpost.module.css";
 import validate from "./validate";
 import { useRouter } from "next/dist/client/router";
+import { useState, useEffect } from "react";
 
 function CreatePost({ url }) {
   const router = useRouter();
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    let item = JSON.parse(sessionStorage.getItem("user"));
+    setUser(item ? item.user : "");
+  }, []);
+
   const createPost = async (values) => {
     try {
-      const res = await fetch(`https://nextjs-post-app.vercel.app/api/posts`, {
+      const res = await fetch(`http://localhost:3000/api/posts`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -28,10 +36,11 @@ function CreatePost({ url }) {
       initialValues={{
         title: "",
         description: "",
+        userName: user.email,
       }}
       validationSchema={validate}
       onSubmit={(values) => {
-        createPost(values);
+        createPost({ ...values, userName: user.email });
       }}
     >
       {(formik) => (

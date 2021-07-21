@@ -7,7 +7,7 @@ async function dbConnect() {
     return;
   }
   const db = await mongoose.connect(
-    "mongodb+srv://zkubilaykaya:mongodb123@nodeblog.5nnky.mongodb.net/posts?retryWrites=true&w=majority",
+    "mongodb+srv://devadmin:devadmin123@cluster0.wgqzk.mongodb.net/newBlog?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
