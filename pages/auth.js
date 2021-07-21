@@ -16,28 +16,34 @@ export default function Auth() {
   }, []);
 
   const signUp = async (values) => {
-    const res = await fetch("http://localhost:3000/api/log/signup", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+    const res = await fetch(
+      "https://nextjs-post-app.vercel.app/api/log/signup",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
+    );
     if (res.status == 201) {
       setAuthRate(1);
     }
   };
 
   const signIn = async (values) => {
-    const res = await fetch("http://localhost:3000/api/log/signin", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+    const res = await fetch(
+      "https://nextjs-post-app.vercel.app/api/log/signin",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
+    );
 
     const data = await res.json();
     if (

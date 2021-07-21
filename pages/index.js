@@ -12,9 +12,12 @@ function Home({ posts }) {
   const router = useRouter();
   const deletePost = async (id) => {
     try {
-      const deleted = await fetch(`http://localhost:3000/api/posts/${id}`, {
-        method: "Delete",
-      });
+      const deleted = await fetch(
+        `https://nextjs-post-app.vercel.app/api/posts/${id}`,
+        {
+          method: "Delete",
+        }
+      );
       router.push("/");
     } catch (error) {
       console.log(error);
@@ -90,7 +93,7 @@ function Home({ posts }) {
 }
 
 export async function getServerSideProps(context) {
-  const res = await fetch(`http://localhost:3000/api/posts`);
+  const res = await fetch(`https://nextjs-post-app.vercel.app/api/posts`);
   const posts = await res.json();
 
   return {

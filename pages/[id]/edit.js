@@ -17,19 +17,24 @@ function Edit({ post, url }) {
   }, []);
 
   const updatePost = async (values) => {
-    await fetch(`http://localhost:3000/api/posts/${post.data._id}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+    await fetch(
+      `https://nextjs-post-app.vercel.app/api/posts/${post.data._id}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }
+    );
     router.push("/");
   };
 
   const isAuthFnc = async () => {
-    const res = await fetch(`http://localhost:3000/api/posts/${post.data._id}`);
+    const res = await fetch(
+      `https://nextjs-post-app.vercel.app/api/posts/${post.data._id}`
+    );
     const data = await res.json();
     let item = JSON.parse(sessionStorage.getItem("user"));
     if (data.data.userName == item.user.email) {
@@ -80,7 +85,7 @@ function Edit({ post, url }) {
 
 export async function getServerSideProps(context) {
   const res = await fetch(
-    `http://localhost:3000/api/posts/${context.query.id}`
+    `https://nextjs-post-app.vercel.app/api/posts/${context.query.id}`
   );
   const post = await res.json();
 

@@ -16,7 +16,7 @@ function CreatePost({ url }) {
 
   const createPost = async (values) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/posts`, {
+      const res = await fetch(`https://nextjs-post-app.vercel.app/api/posts`, {
         method: "POST",
         headers: {
           Accept: "application/json",
