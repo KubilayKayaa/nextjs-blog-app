@@ -60,7 +60,7 @@ function Home({ posts }) {
               })
               .map((post) => (
                 <div key={post._id} className={styles.post}>
-                  <Link href={`/${post._id}`}>
+                  <Link href="#">
                     <a className={styles.postTitle}>{post.title}</a>
                   </Link>
                   <p>{post.description}</p>
