@@ -1,4 +1,4 @@
-import dbConnect from "../../../db/dbConnection";
+import dbConnect from "../../../utils/dbConnect";
 import User from "../../../db/models/User";
 import jwt from "jsonwebtoken";
 
