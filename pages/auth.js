@@ -5,6 +5,7 @@ import { Formik, Form } from "formik";
 import TextField from "../components/CreatePost/TextField";
 import AuthValidate from "../validates/AuthValidate";
 import AuthValidate2 from "../validates/AuthValidate2";
+import http from "../http-config";
 
 export default function Auth() {
   const [authRate, setAuthRate] = useState(1);
@@ -16,34 +17,28 @@ export default function Auth() {
   }, []);
 
   const signUp = async (values) => {
-    const res = await fetch(
-      "https://nextjs-post-app.vercel.app/api/log/signup",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }
-    );
+    const res = await fetch(`${http}/api/log/signup`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
     if (res.status == 201) {
       setAuthRate(1);
     }
   };
 
   const signIn = async (values) => {
-    const res = await fetch(
-      "https://nextjs-post-app.vercel.app/api/log/signin",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }
-    );
+    const res = await fetch(`${http}/api/log/signin`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
 
     const data = await res.json();
     if (

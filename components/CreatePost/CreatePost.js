@@ -4,6 +4,7 @@ import styles from "./createpost.module.css";
 import validate from "./validate";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import http from "../../http-config";
 
 function CreatePost({ url }) {
   const router = useRouter();
@@ -16,7 +17,7 @@ function CreatePost({ url }) {
 
   const createPost = async (values) => {
     try {
-      const res = await fetch(`https://nextjs-post-app.vercel.app/api/posts`, {
+      const res = await fetch(`${http}/api/posts`, {
         method: "POST",
         headers: {
           Accept: "application/json",

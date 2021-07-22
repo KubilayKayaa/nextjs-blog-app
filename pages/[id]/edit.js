@@ -5,11 +5,12 @@ import validate from "../../components/CreatePost/validate";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import http from "../../http-config";
 
 function Edit({ post, url }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
   const [user, setUser] = useState("");
 
   useEffect(() => {
@@ -17,24 +18,19 @@ function Edit({ post, url }) {
   }, []);
 
   const updatePost = async (values) => {
-    await fetch(
-      `https://nextjs-post-app.vercel.app/api/posts/${post.data._id}`,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }
-    );
+    await fetch(`${http}/api/posts/${post.data._id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
     router.push("/");
   };
 
   const isAuthFnc = async () => {
-    const res = await fetch(
-      `https://nextjs-post-app.vercel.app/api/posts/${post.data._id}`
-    );
+    const res = await fetch(`${http}/api/posts/${post.data._id}`);
     const data = await res.json();
     let item = JSON.parse(sessionStorage.getItem("user"));
     if (data.data.userName == item.user.email) {
@@ -44,9 +40,19 @@ function Edit({ post, url }) {
     }
   };
 
-  return (
-    <>
-      {isAuth ? (
+  function Redirect({ to }) {
+    const router = useRouter();
+
+    useEffect(() => {
+      router.push(to);
+    }, [to]);
+
+    return null;
+  }
+
+  if (isAuth) {
+    return (
+      <>
         <Formik
           initialValues={{
             title: post.data.title,
@@ -76,17 +82,15 @@ function Edit({ post, url }) {
             </div>
           )}
         </Formik>
-      ) : (
-        <p>You can not update this post.</p>
-      )}
-    </>
-  );
+      </>
+    );
+  }
+
+  return <Redirect to="/" />;
 }
 
 export async function getServerSideProps(context) {
-  const res = await fetch(
-    `https://nextjs-post-app.vercel.app/api/posts/${context.query.id}`
-  );
+  const res = await fetch(`${http}/api/posts/${context.query.id}`);
   const post = await res.json();
 
   return {

@@ -5,6 +5,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import http from "../http-config";
 
 function Home({ posts }) {
   const [search, setSearch] = useState("");
@@ -12,12 +13,9 @@ function Home({ posts }) {
   const router = useRouter();
   const deletePost = async (id) => {
     try {
-      const deleted = await fetch(
-        `https://nextjs-post-app.vercel.app/api/posts/${id}`,
-        {
-          method: "Delete",
-        }
-      );
+      const deleted = await fetch(`${http}/api/posts/${id}`, {
+        method: "Delete",
+      });
       router.push("/");
     } catch (error) {
       console.log(error);
@@ -60,7 +58,7 @@ function Home({ posts }) {
               })
               .map((post) => (
                 <div key={post._id} className={styles.post}>
-                  <Link href="#">
+                  <Link href={`/${post._id}`}>
                     <a className={styles.postTitle}>{post.title}</a>
                   </Link>
                   <p>{post.description}</p>
@@ -92,8 +90,8 @@ function Home({ posts }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const res = await fetch(`https://nextjs-post-app.vercel.app/api/posts`);
+export async function getServerSideProps() {
+  const res = await fetch(`${http}/api/posts`);
   const posts = await res.json();
 
   return {
