@@ -47,7 +47,7 @@ export default function Auth() {
       data.data.user.password == values.password
     ) {
       sessionStorage.setItem("user", JSON.stringify(data.data));
-      <Redirect to="/60f953d3e0cad40008b454a9" />;
+      window.location.href = "/";
     } else {
       setSigninError(true);
     }
