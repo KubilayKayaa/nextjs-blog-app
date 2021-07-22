@@ -6,12 +6,14 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import http from "../../http-config";
+import Redirect from "../../components/Redirect";
 
 function Edit({ post, url }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
   const [isAuth, setIsAuth] = useState(true);
   const [user, setUser] = useState("");
+  const [render, setRender] = useState();
 
   useEffect(() => {
     isAuthFnc();
@@ -35,24 +37,7 @@ function Edit({ post, url }) {
     let item = JSON.parse(sessionStorage.getItem("user"));
     if (data.data.userName == item.user.email) {
       setIsAuth(true);
-    } else {
-      setIsAuth(false);
-    }
-  };
-
-  function Redirect({ to }) {
-    const router = useRouter();
-
-    useEffect(() => {
-      router.push(to);
-    }, [to]);
-
-    return null;
-  }
-
-  if (isAuth) {
-    return (
-      <>
+      setRender(
         <Formik
           initialValues={{
             title: post.data.title,
@@ -82,8 +67,14 @@ function Edit({ post, url }) {
             </div>
           )}
         </Formik>
-      </>
-    );
+      );
+    } else {
+      setIsAuth(false);
+    }
+  };
+
+  if (isAuth) {
+    return <>{render}</>;
   }
 
   return <Redirect to="/" />;
