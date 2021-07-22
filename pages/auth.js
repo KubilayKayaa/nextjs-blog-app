@@ -6,6 +6,7 @@ import TextField from "../components/CreatePost/TextField";
 import AuthValidate from "../validates/AuthValidate";
 import AuthValidate2 from "../validates/AuthValidate2";
 import http from "../http-config";
+import Redirect from "../components/Redirect";
 
 export default function Auth() {
   const [authRate, setAuthRate] = useState(1);
@@ -46,7 +47,7 @@ export default function Auth() {
       data.data.user.password == values.password
     ) {
       sessionStorage.setItem("user", JSON.stringify(data.data));
-      router.reload(window.location.pathname);
+      <Redirect to="/60f953d3e0cad40008b454a9" />;
     } else {
       setSigninError(true);
     }
@@ -74,7 +75,8 @@ export default function Auth() {
                 Sign Up
               </button>
               <div onClick={() => setAuthRate(1)}>
-                Do you have an accout? <b>Sign In</b>
+                Do you have an accout?
+                <b>Sign In</b>
               </div>
             </Form>
           )}
@@ -98,7 +100,8 @@ export default function Auth() {
               </button>
               <p>{setSigninError == true ? "Email/Şifre hatalı!" : ""}</p>
               <div onClick={() => setAuthRate(0)}>
-                Dont you have an accout? <b>Sign Up</b>
+                Dont you have an accout?
+                <b>Sign Up</b>
               </div>
             </Form>
           )}
