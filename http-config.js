@@ -1,4 +1,4 @@
-//https://nextjs-post-app.vercel.app
+//https://nextjs-sample-blog-app.vercel.app
 //http://localhost:3000
 
 const http = "http://localhost:3000";
